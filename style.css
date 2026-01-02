@@ -1,6 +1,7 @@
 :root {
     --primary-blue: #0a4d68;
     --accent-gold: #d4a017;
+    --accent-blue: #2da8ff; /* new light-blue accent */
     --white: #ffffff;
     --dark: #1a1a1a;
     --light-gray: #f8f9fa;
@@ -141,13 +142,20 @@ header.scrolled .hamburger span {
 }
 
 .btn-primary {
-    background: var(--accent-gold);
-    color: var(--dark);
+    background: var(--accent-blue); /* light blue */
+    color: #fff; /* white text for contrast */
+    border: none;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(212,160,23,0.4);
+    box-shadow: 0 10px 30px rgba(45,168,255,0.25);
+    filter: brightness(0.95);
+}
+
+.btn-primary:focus {
+    outline: 3px solid rgba(45,168,255,0.18);
+    outline-offset: 3px;
 }
 
 .btn-secondary {
@@ -189,6 +197,9 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     transition: all 0.3s;
     cursor: pointer;
+    display: flex; /* make card a column flex container */
+    flex-direction: column;
+    min-height: 480px; /* keeps cards consistent and allows vertical alignment */
 }
 
 .card:hover {
@@ -204,6 +215,18 @@ h2 {
 
 .card-content {
     padding: 1.5rem;
+    flex: 1; /* allow content to grow and position button */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* keep CTA at bottom */
+}
+
+/* Position the CTA button at the bottom center of the card */
+.card .card-content .btn {
+    display: inline-flex;
+    margin-top: 1.5rem;
+    align-self: center; /* center horizontally */
+    justify-content: center;
 }
 
 .card h3 {
@@ -391,6 +414,7 @@ h2 {
         display: flex;
     }
 
+    /* Mobile nav overlay */
     nav ul {
         position: fixed;
         top: 70px;
@@ -403,10 +427,16 @@ h2 {
         align-items: center;
         padding-top: 2rem;
         transition: left 0.3s;
+        z-index: 2000; /* ensure menu sits above header */
     }
 
     nav ul.active {
         left: 0;
+    }
+
+    /* When menu is active, force link color to dark so it's readable on white */
+    nav ul.active a {
+        color: var(--dark) !important;
     }
 
     nav a {
